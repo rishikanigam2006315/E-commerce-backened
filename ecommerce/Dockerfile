@@ -1,12 +1,18 @@
+FROM maven:3.9.6-eclipse-temurin-17 AS build
+
+WORKDIR /app
+
+COPY . .
+
+RUN mvn clean package -DskipTests
+
+
 FROM eclipse-temurin:17-jdk-alpine
 
 WORKDIR /app
 
-# mvnw ko executable permission do
-COPY . .
-RUN chmod +x mvnw
-RUN ./mvnw clean package -DskipTests
+COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8089
 
-CMD ["java", "-jar", "target/ecommerce-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "app.jar"]
