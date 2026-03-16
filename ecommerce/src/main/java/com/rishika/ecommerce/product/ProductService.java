@@ -43,4 +43,8 @@ public class ProductService {
         return productRepository.findByNameContainingIgnoreCase(keyword);
     }
 
+    public void deleteProduct(Long id){
+        productRepository.deleteById(id);
+    }
+
 }

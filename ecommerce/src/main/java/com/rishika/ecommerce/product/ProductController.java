@@ -48,4 +48,14 @@ public class ProductController {
     public List<Product> search(@RequestParam String keyword) {
         return productService.search(keyword);
     }
+
+    @DeleteMapping("/{id}")
+    public ApiResponse<String> deleteProduct(@PathVariable Long id){
+        productService.deleteProduct(id);
+        return new ApiResponse<>(
+                true,
+                "Product deleted successfully",
+                null
+        );
+    }
 }

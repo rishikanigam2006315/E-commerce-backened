@@ -1,0 +1,5 @@
+app:
+  mode: DEV
+
+server:
+  port: 8089
