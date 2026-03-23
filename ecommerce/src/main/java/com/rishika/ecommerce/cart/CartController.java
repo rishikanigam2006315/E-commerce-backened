@@ -3,6 +3,8 @@ package com.rishika.ecommerce.cart;
 import com.rishika.ecommerce.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -12,12 +14,14 @@ public class CartController {
 
     private final CartService cartService;
 
-    // ➕ ADD TO CART
     @PostMapping("/add")
-    public ApiResponse<?> addToCart(@RequestBody CartRequest request) {
+    public ApiResponse<?> addToCart(
+            @RequestBody CartRequest request,
+            Principal principal
+    ) {
 
         cartService.addToCart(
-                //request.getCartId(),
+                principal.getName(),
                 request.getProductId(),
                 request.getQuantity()
         );
