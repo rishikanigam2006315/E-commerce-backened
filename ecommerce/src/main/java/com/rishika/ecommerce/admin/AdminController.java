@@ -17,7 +17,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
+
     private final AdminService adminService;
     private final ImageService imageService;
     private final ProductRepository productRepository;
@@ -26,42 +28,53 @@ public class AdminController {
     public Category addCategory(@RequestBody Category category){
         return adminService.addCategory(category);
     }
+
     @DeleteMapping("/category/{id}")
     public void deleteCategory(@PathVariable Long id){
         adminService.deleteCategory(id);
     }
-    @PostMapping("/product")
+
+
+    @PutMapping("/product/{id}")
     public Product updateProduct(
             @PathVariable Long id,
             @RequestBody Product product
     ){
         return adminService.updateProduct(id, product);
     }
+
     @DeleteMapping("/product/{id}")
     public void deleteProduct(@PathVariable Long id){
         adminService.deleteProduct(id);
     }
+
+
     @GetMapping("/orders")
     public List<Order> allOrders(){
         return adminService.getAllOrders();
     }
+
     @PutMapping("/order/{id}")
     public Order updateOrder(
             @PathVariable Long id,
             @RequestParam OrderStatus status
-            ){
+    ){
         return adminService.updateOrderStatus(id, status);
     }
+
+
     @GetMapping("/users")
     public List<User> users(){
         return adminService.getAllUsers();
     }
+
     @PutMapping("/block/{id}")
     public void blockUser(@PathVariable Long id){
         adminService.blockUser(id);
     }
+
+
     @PostMapping("/product/upload")
-    @PreAuthorize("hasRole('ADMIN')")
     public Product uploadProduct(
             @RequestPart("product") Product product,
             @RequestPart("image") MultipartFile image
@@ -70,5 +83,4 @@ public class AdminController {
         product.setImageUrl(url);
         return productRepository.save(product);
     }
-
 }

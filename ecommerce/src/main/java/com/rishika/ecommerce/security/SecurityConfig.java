@@ -30,21 +30,20 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> auth
 
-                        // AUTH
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/razorpay/**").permitAll()
                         .requestMatchers("/api/payments/**").permitAll()
 
-                        // PUBLIC
                         .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
 
 
-                        // USER
                         .requestMatchers("/api/cart/**").hasRole("USER")
                         .requestMatchers("/api/orders/**").hasRole("USER")
 
-                        // ADMIN
-                        .requestMatchers("/api/products/**").hasRole("ADMIN")
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN") // 🔥 ADD THIS
+                        .requestMatchers(HttpMethod.POST, "/api/products/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/products/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/products/**").hasRole("ADMIN")
                         .requestMatchers("/api/categories/**").hasRole("ADMIN")
 
                         .anyRequest().authenticated()
