@@ -15,13 +15,17 @@ public class ProductController {
     private final ProductService productService;
 
     // ADMIN
-    @PostMapping("/add/{categoryId}")
-    public Product addProduct(
-            @RequestBody Product product,
-            @PathVariable Long categoryId
-    ) {
-        return productService.addProduct(product, categoryId);
+    @PostMapping("/add")
+    public Product addProduct(@RequestBody ProductCreateRequest request){
+        return productService.addProduct(request);
     }
+//    @PostMapping("/add/{categoryId}")
+//    public Product addProduct(
+//            @RequestBody Product product,
+//            @PathVariable Long categoryId
+//    ) {
+//        return productService.addProduct(product, categoryId);
+//    }
 
     @GetMapping("/category/{id}")
     public List<Product> getByCategory(@PathVariable Long id) {

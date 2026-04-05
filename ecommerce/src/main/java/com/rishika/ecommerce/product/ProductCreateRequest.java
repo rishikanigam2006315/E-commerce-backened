@@ -16,6 +16,11 @@ public class ProductCreateRequest {
     @NotBlank
     private String description;
 
+    private int stock;
+
     @NotNull
     private Long categoryId;
+
+    private String imageUrl;
+    private String videoUrl;
 }

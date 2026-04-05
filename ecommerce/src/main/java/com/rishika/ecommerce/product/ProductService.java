@@ -2,6 +2,10 @@ package com.rishika.ecommerce.product;
 
 import com.rishika.ecommerce.category.Category;
 import com.rishika.ecommerce.category.CategoryRepository;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,14 +20,32 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
 
-    public Product addProduct(Product product, Long categoryId) {
+    public Product addProduct(ProductCreateRequest request) {
 
-        Category category = categoryRepository.findById(categoryId)
+        Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Category not found"));
 
+        Product product = new Product();
+
+        product.setName(request.getName());
+        product.setDescription(request.getDescription());
+        product.setPrice(request.getPrice());
+        product.setStock(request.getStock());
+        product.setImageUrl(request.getImageUrl());
+        product.setVideoUrl(request.getVideoUrl());
         product.setCategory(category);
+
         return productRepository.save(product);
     }
+
+//    public Product addProduct(Product product, Long categoryId) {
+//
+//        Category category = categoryRepository.findById(categoryId)
+//                .orElseThrow(() -> new RuntimeException("Category not found"));
+//
+//        product.setCategory(category);
+//        return productRepository.save(product);
+//    }
 
     public List<Product> getAllProducts() {
         return productRepository.findAll();
