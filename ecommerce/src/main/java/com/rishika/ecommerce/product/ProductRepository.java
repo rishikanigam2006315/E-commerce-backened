@@ -10,5 +10,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByCategoryId(Long categoryId);
     Page<Product> findAll(Pageable pageable);
     List<Product> findByNameContainingIgnoreCase(String name);
+    List<Product> findByVideoUrlIsNotNull();
 
 }

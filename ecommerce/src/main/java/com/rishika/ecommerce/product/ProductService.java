@@ -69,4 +69,8 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
+    public List<Product> getProductsWithVideos(){
+        return productRepository.findByVideoUrlIsNotNull();
+    }
+
 }

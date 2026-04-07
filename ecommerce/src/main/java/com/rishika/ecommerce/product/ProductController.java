@@ -53,6 +53,18 @@ public class ProductController {
         return productService.search(keyword);
     }
 
+    @GetMapping("/videos")
+    public ApiResponse<List<Product>> getVideoProducts(){
+
+        List<Product> products = productService.getProductsWithVideos();
+
+        return new ApiResponse<>(
+                true,
+                "Video products fetched successfully",
+                products
+        );
+    }
+
     @DeleteMapping("/{id}")
     public ApiResponse<String> deleteProduct(@PathVariable Long id){
         productService.deleteProduct(id);
