@@ -36,6 +36,8 @@ public class SecurityConfig {
 
                         .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
 
+                        .requestMatchers("/api/user/**").hasRole("USER")
+
 
                         .requestMatchers("/api/cart/**").hasRole("USER")
                         .requestMatchers("/api/orders/**").hasRole("USER")
